@@ -5,9 +5,10 @@ interface ControlsProps {
   setIsActive: (isActive: boolean) => void;
   handleModeChange: (mode: string) => void;
   mode: string;
+  handleTestClick: () => void;
 }
 
-const Controls: React.FC<ControlsProps> = ({ isActive, setIsActive, handleModeChange, mode }) => {
+const Controls: React.FC<ControlsProps> = ({ isActive, setIsActive, handleModeChange, mode, handleTestClick }) => {
   return (
     <div className="text-center">
       <div className="btn-group mb-3">
@@ -18,6 +19,9 @@ const Controls: React.FC<ControlsProps> = ({ isActive, setIsActive, handleModeCh
       <div>
         <button className="btn btn-primary btn-lg mx-2" onClick={() => setIsActive(!isActive)}>
           {isActive ? 'Pause' : 'Start'}
+        </button>
+        <button className="btn btn-secondary btn-lg mx-2" onClick={handleTestClick}>
+          Test (3s)
         </button>
       </div>
     </div>

@@ -14,6 +14,11 @@ function App() {
   const [audioAlert, setAudioAlert] = useState(true);
   const [desktopNotification, setDesktopNotification] = useState(true);
 
+  const handleTestClick = () => {
+    setTime(3);
+    setIsActive(true);
+  };
+
   const handleModeChange = useCallback((newMode: string) => {
     setMode(newMode);
     setIsActive(false);
@@ -108,6 +113,7 @@ function App() {
             setIsActive={setIsActive}
             handleModeChange={handleModeChange}
             mode={mode}
+            handleTestClick={handleTestClick}
           />
           <Settings
             flashTitle={flashTitle}
