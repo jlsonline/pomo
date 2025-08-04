@@ -6,9 +6,10 @@ interface ControlsProps {
   handleModeChange: (mode: string) => void;
   mode: string;
   handleTestClick: () => void;
+  handleReset: () => void;
 }
 
-const Controls: React.FC<ControlsProps> = ({ isActive, setIsActive, handleModeChange, mode, handleTestClick }) => {
+const Controls: React.FC<ControlsProps> = ({ isActive, setIsActive, handleModeChange, mode, handleTestClick, handleReset }) => {
   return (
     <div className="text-center">
       <div className="btn-group mb-3">
@@ -22,6 +23,9 @@ const Controls: React.FC<ControlsProps> = ({ isActive, setIsActive, handleModeCh
         </button>
         <button className="btn btn-secondary btn-lg mx-2" onClick={handleTestClick}>
           Test (3s)
+        </button>
+        <button className="btn btn-danger btn-lg mx-2" onClick={handleReset}>
+          Reset
         </button>
       </div>
     </div>

@@ -19,6 +19,13 @@ function App() {
     setIsActive(true);
   };
 
+  const handleReset = () => {
+    setMode('focus');
+    setTime(25 * 60);
+    setIsActive(false);
+    setPomoCount(0);
+  };
+
   const handleModeChange = useCallback((newMode: string) => {
     setMode(newMode);
     setIsActive(false);
@@ -114,6 +121,7 @@ function App() {
             handleModeChange={handleModeChange}
             mode={mode}
             handleTestClick={handleTestClick}
+            handleReset={handleReset}
           />
           <Settings
             flashTitle={flashTitle}
