@@ -88,6 +88,15 @@ function App() {
     }
   }, [desktopNotification]);
 
+  useEffect(() => {
+    const formatTime = (seconds: number) => {
+      const mins = Math.floor(seconds / 60).toString().padStart(2, '0');
+      const secs = (seconds % 60).toString().padStart(2, '0');
+      return `${mins}:${secs}`;
+    };
+    document.title = `${formatTime(time)} - Pomo`;
+  }, [time]);
+
   return (
     <div className="container vh-100 d-flex justify-content-center align-items-center">
       <div className="card shadow" style={{ width: '30rem' }}>
