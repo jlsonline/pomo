@@ -7,17 +7,9 @@ interface ControlsProps {
   mode: string;
   handleTestClick: () => void;
   handleReset: () => void;
-  stopSound: () => void;
-  repeatSound: boolean;
-  isSoundPlayingAndRepeating: boolean;
 }
 
-const Controls: React.FC<ControlsProps> = ({ isActive, setIsActive, handleModeChange, mode, handleTestClick, handleReset, stopSound, repeatSound, isSoundPlayingAndRepeating }) => {
-  let stopSoundLinkClassName = "btn btn-link stop-sound-btn";
-  if (isSoundPlayingAndRepeating) {
-    stopSoundLinkClassName += " visible";
-  }
-
+const Controls: React.FC<ControlsProps> = ({ isActive, setIsActive, handleModeChange, mode, handleTestClick, handleReset }) => {
   return (
     <div className="text-center">
       <div className="btn-group mb-3">
@@ -35,9 +27,6 @@ const Controls: React.FC<ControlsProps> = ({ isActive, setIsActive, handleModeCh
         <button className="btn btn-danger btn-lg mx-2" onClick={handleReset}>
           Reset
         </button>
-        <a href="#" className={stopSoundLinkClassName} onClick={(e) => { e.preventDefault(); stopSound(); }}>
-          Stop Sound
-        </a>
       </div>
     </div>
   );

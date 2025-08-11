@@ -12,11 +12,14 @@ interface SettingsProps {
   setAudioAlert: (audioAlert: boolean) => void;
   desktopNotification: boolean;
   setDesktopNotification: (desktopNotification: boolean) => void;
+  onToggleDesktopNotification: (checked: boolean) => void;
   repeatSound: boolean;
   setRepeatSound: (repeatSound: boolean) => void;
   selectedSound: string;
   setSelectedSound: (soundUrl: string) => void;
   soundOptions: SoundOption[];
+  stopSound: () => void;
+  isSoundPlayingAndRepeating: boolean;
 }
 
 const Settings: React.FC<SettingsProps> = ({ 
@@ -25,12 +28,16 @@ const Settings: React.FC<SettingsProps> = ({
   desktopNotification, setDesktopNotification, 
   repeatSound, setRepeatSound, 
   selectedSound, setSelectedSound, 
-  soundOptions 
+  soundOptions, 
+  onToggleDesktopNotification,
+  stopSound,
+  isSoundPlayingAndRepeating
 }) => {
   return (
     <div className="mt-4">
-      <h5>Settings</h5>
-      <div className="form-check form-switch mb-2">
+      <h5 className="text-start">Settings</h5>
+      <div className="px-3">
+        <div className="form-check form-switch mb-2">
         <input className="form-check-input" type="checkbox" role="switch" id="flashTitle" checked={flashTitle} onChange={() => setFlashTitle(!flashTitle)} />
         <label className="form-check-label" htmlFor="flashTitle">Flash Title</label>
       </div>
@@ -42,8 +49,17 @@ const Settings: React.FC<SettingsProps> = ({
         <input className="form-check-input" type="checkbox" role="switch" id="repeatSound" checked={repeatSound} onChange={() => setRepeatSound(!repeatSound)} />
         <label className="form-check-label" htmlFor="repeatSound">Repeat Sound until Acknowledged</label>
       </div>
+      
+
       <div className="form-check form-switch mb-2">
-        <input className="form-check-input" type="checkbox" role="switch" id="desktopNotification" checked={desktopNotification} onChange={() => setDesktopNotification(!desktopNotification)} />
+        <input
+          className="form-check-input"
+          type="checkbox"
+          role="switch"
+          id="desktopNotification"
+          checked={desktopNotification}
+          onChange={(e) => onToggleDesktopNotification(e.target.checked)}
+        />
         <label className="form-check-label" htmlFor="desktopNotification">Desktop Notifications</label>
       </div>
 
@@ -62,6 +78,15 @@ const Settings: React.FC<SettingsProps> = ({
           ))}
         </select>
       </div>
+
+      {isSoundPlayingAndRepeating && (
+        <div className="text-center mt-3">
+          <a href="#" className="btn btn-link stop-sound-btn visible" onClick={(e) => { e.preventDefault(); stopSound(); }}>
+            Stop Sound
+          </a>
+        </div>
+      )}
+    </div>
     </div>
   );
 };

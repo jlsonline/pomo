@@ -24,7 +24,8 @@ function App() {
   const [pomoCount, setPomoCount] = useState(0);
   const [flashTitle, setFlashTitle] = useState(true);
   const [audioAlert, setAudioAlert] = useState(true);
-  const [desktopNotification, setDesktopNotification] = useState(true);
+  const [desktopNotification, setDesktopNotification] = useState(false);
+  const [notificationMessage, setNotificationMessage] = useState<string | null>(null);
   const [repeatSound, setRepeatSound] = useState(false);
   const [selectedSound, setSelectedSound] = useState(soundOptions[0].url);
   const [isSoundPlayingAndRepeating, setIsSoundPlayingAndRepeating] = useState(false);
@@ -52,6 +53,21 @@ function App() {
     setIsActive(false);
     setPomoCount(0);
   };
+
+  const handleToggleDesktopNotification = useCallback(async (checked: boolean) => {
+    if (checked) {
+      const permission = await Notification.requestPermission();
+      if (permission === 'granted') {
+        setDesktopNotification(true);
+        setNotificationMessage(null); // Clear message on success
+      } else {
+        setDesktopNotification(false); // Keep it false if permission denied
+        setNotificationMessage('Desktop notification permission denied. Please enable it in your browser settings.');
+      }
+    } else {
+      setDesktopNotification(false);
+    }
+  }, []);
 
   const handleModeChange = useCallback((newMode: string) => {
     setMode(newMode);
@@ -129,13 +145,9 @@ function App() {
     }
 
     return () => clearInterval(interval);
-  }, [isActive, time, audioAlert, desktopNotification, flashTitle, handleModeChange, mode, pomoCount, repeatSound, selectedSound, isSoundPlayingAndRepeating]);
+  }, [isActive, time, audioAlert, flashTitle, handleModeChange, mode, pomoCount, repeatSound, selectedSound, isSoundPlayingAndRepeating]);
 
-  useEffect(() => {
-    if (desktopNotification && Notification.permission !== 'granted') {
-      Notification.requestPermission();
-    }
-  }, [desktopNotification]);
+  
 
   useEffect(() => {
     const formatTime = (seconds: number) => {
@@ -146,12 +158,21 @@ function App() {
     document.title = `${formatTime(time)} - Pomo`;
   }, [time]);
 
+  useEffect(() => {
+    if (notificationMessage) {
+      const timer = setTimeout(() => {
+        setNotificationMessage(null);
+      }, 5000); // Clear message after 5 seconds
+      return () => clearTimeout(timer);
+    }
+  }, [notificationMessage]);
+
   return (
     <div className="container vh-100 d-flex justify-content-center align-items-center">
       <div className="card shadow">
-        <div className="card-body text-center">
+        <div className="card-body">
           <h1 className="text-center">Pomo</h1>
-          <Timer time={time} />
+          <Timer time={time} className="text-center" />
           <Controls
             isActive={isActive}
             setIsActive={setIsActive}
@@ -159,9 +180,6 @@ function App() {
             mode={mode}
             handleTestClick={handleTestClick}
             handleReset={handleReset}
-            stopSound={stopSound}
-            repeatSound={repeatSound}
-            isSoundPlayingAndRepeating={isSoundPlayingAndRepeating}
           />
           <Settings
             flashTitle={flashTitle}
@@ -170,12 +188,20 @@ function App() {
             setAudioAlert={setAudioAlert}
             desktopNotification={desktopNotification}
             setDesktopNotification={setDesktopNotification}
+            onToggleDesktopNotification={handleToggleDesktopNotification}
             repeatSound={repeatSound}
             setRepeatSound={setRepeatSound}
             selectedSound={selectedSound}
             setSelectedSound={setSelectedSound}
             soundOptions={soundOptions}
+            stopSound={stopSound}
+            isSoundPlayingAndRepeating={isSoundPlayingAndRepeating}
           />
+          {notificationMessage && (
+            <div className="alert alert-warning mt-3" role="alert">
+              {notificationMessage}
+            </div>
+          )}
         </div>
       </div>
     </div>
