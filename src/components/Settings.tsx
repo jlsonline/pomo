@@ -79,13 +79,11 @@ const Settings: React.FC<SettingsProps> = ({
         </select>
       </div>
 
-      {isSoundPlayingAndRepeating && (
-        <div className="text-center mt-3">
+      <div className={`text-center mt-3 ${!isSoundPlayingAndRepeating ? 'd-none' : ''}`}>
           <a href="#" className="btn btn-link stop-sound-btn visible" onClick={(e) => { e.preventDefault(); stopSound(); }}>
             Stop Sound
           </a>
         </div>
-      )}
     </div>
     </div>
   );

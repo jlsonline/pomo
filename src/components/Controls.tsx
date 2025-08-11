@@ -18,14 +18,14 @@ const Controls: React.FC<ControlsProps> = ({ isActive, setIsActive, handleModeCh
         <button className={`btn btn-outline-primary ${mode === 'longBreak' && 'active'}`} onClick={() => handleModeChange('longBreak')}>Long Break</button>
       </div>
       <div>
-        <button className="btn btn-primary btn-lg mx-2" onClick={() => setIsActive(!isActive)}>
+        <button className="btn btn-primary btn-lg mx-2 btn-fixed-width" onClick={() => setIsActive(!isActive)}>
           {isActive ? 'Pause' : 'Start'}
         </button>
-        <button className="btn btn-secondary btn-lg mx-2" onClick={handleTestClick}>
+        <button className="btn btn-secondary btn-lg mx-2 btn-fixed-width" onClick={handleTestClick}>
           Test (3s)
         </button>
-        <button className="btn btn-danger btn-lg mx-2" onClick={handleReset}>
-          Reset
+        <button className="btn btn-danger btn-lg mx-2 btn-fixed-width" onClick={handleReset}>
+          Reset Focus Counter
         </button>
       </div>
     </div>

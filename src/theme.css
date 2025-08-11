@@ -60,3 +60,9 @@ h1 {
 .stop-sound-btn.visible {
   visibility: visible;
 }
+
+.btn-fixed-width {
+  min-width: 90px; /* Adjust as needed */
+  margin-top: 5px;
+  margin-bottom: 5px;
+}

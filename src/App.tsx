@@ -27,7 +27,7 @@ function App() {
   const [desktopNotification, setDesktopNotification] = useState(false);
   const [notificationMessage, setNotificationMessage] = useState<string | null>(null);
   const [repeatSound, setRepeatSound] = useState(false);
-  const [selectedSound, setSelectedSound] = useState(soundOptions[0].url);
+  const [selectedSound, setSelectedSound] = useState(soundOptions[2].url);
   const [isSoundPlayingAndRepeating, setIsSoundPlayingAndRepeating] = useState(false);
   const audioInstance = useRef<HTMLAudioElement | null>(null);
 
@@ -172,6 +172,11 @@ function App() {
       <div className="card shadow">
         <div className="card-body">
           <h1 className="text-center">Pomo</h1>
+          <div className="text-center mb-3">
+            {mode === 'focus' && `Focus Session ${pomoCount + 1}/4`}
+            {mode === 'shortBreak' && 'Short Break'}
+            {mode === 'longBreak' && 'Long Break'}
+          </div>
           <Timer time={time} className="text-center" />
           <Controls
             isActive={isActive}
@@ -197,11 +202,9 @@ function App() {
             stopSound={stopSound}
             isSoundPlayingAndRepeating={isSoundPlayingAndRepeating}
           />
-          {notificationMessage && (
-            <div className="alert alert-warning mt-3" role="alert">
-              {notificationMessage}
-            </div>
-          )}
+          <div className={`alert alert-warning mt-3 ${!notificationMessage ? 'd-none' : ''}`} role="alert">
+            {notificationMessage}
+          </div>
         </div>
       </div>
     </div>
