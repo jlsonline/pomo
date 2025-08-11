@@ -1,9 +1,20 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 import Timer from './components/Timer';
 import Controls from './components/Controls';
 import Settings from './components/Settings';
+
+interface SoundOption {
+  name: string;
+  url: string;
+}
+
+const soundOptions: SoundOption[] = [
+  { name: 'Bell', url: '/sounds/bell.mp3' },
+  { name: 'Chime', url: '/sounds/chime.mp3' },
+  { name: 'Ding', url: '/sounds/ding.mp3' },
+];
 
 function App() {
   const [mode, setMode] = useState('focus'); // 'focus', 'shortBreak', 'longBreak'
@@ -13,13 +24,28 @@ function App() {
   const [flashTitle, setFlashTitle] = useState(true);
   const [audioAlert, setAudioAlert] = useState(true);
   const [desktopNotification, setDesktopNotification] = useState(true);
+  const [repeatSound, setRepeatSound] = useState(false);
+  const [selectedSound, setSelectedSound] = useState(soundOptions[0].url);
+  const [isSoundPlayingAndRepeating, setIsSoundPlayingAndRepeating] = useState(false);
+  const audioInstance = useRef<HTMLAudioElement | null>(null);
+
+  const stopSound = () => {
+    if (audioInstance.current) {
+      audioInstance.current.pause();
+      audioInstance.current.currentTime = 0;
+      audioInstance.current = null; // Crucial: Nullify the instance after stopping
+      setIsSoundPlayingAndRepeating(false); // Set to false when sound stops
+    }
+  };
 
   const handleTestClick = () => {
+    stopSound();
     setTime(3);
     setIsActive(true);
   };
 
   const handleReset = () => {
+    stopSound();
     setMode('focus');
     setTime(25 * 60);
     setIsActive(false);
@@ -68,8 +94,18 @@ function App() {
       }
 
       if (audioAlert) {
-        const audio = new Audio('https://www.soundjay.com/buttons/sounds/button-1.mp3'); // Placeholder sound
-        audio.play();
+        const newAudio = new Audio(selectedSound);
+        newAudio.loop = repeatSound;
+        try {
+          newAudio.play();
+          audioInstance.current = newAudio;
+          if (repeatSound) {
+            setIsSoundPlayingAndRepeating(true);
+          }
+        } catch (error) {
+          console.error("Error playing audio:", error);
+          // Optionally, provide user feedback about the error
+        }
       }
 
       if (desktopNotification && Notification.permission === 'granted') {
@@ -92,7 +128,7 @@ function App() {
     }
 
     return () => clearInterval(interval);
-  }, [isActive, time, audioAlert, desktopNotification, flashTitle, handleModeChange, mode, pomoCount]);
+  }, [isActive, time, audioAlert, desktopNotification, flashTitle, handleModeChange, mode, pomoCount, repeatSound, selectedSound, isSoundPlayingAndRepeating]);
 
   useEffect(() => {
     if (desktopNotification && Notification.permission !== 'granted') {
@@ -122,6 +158,9 @@ function App() {
             mode={mode}
             handleTestClick={handleTestClick}
             handleReset={handleReset}
+            stopSound={stopSound}
+            repeatSound={repeatSound}
+            isSoundPlayingAndRepeating={isSoundPlayingAndRepeating}
           />
           <Settings
             flashTitle={flashTitle}
@@ -130,6 +169,11 @@ function App() {
             setAudioAlert={setAudioAlert}
             desktopNotification={desktopNotification}
             setDesktopNotification={setDesktopNotification}
+            repeatSound={repeatSound}
+            setRepeatSound={setRepeatSound}
+            selectedSound={selectedSound}
+            setSelectedSound={setSelectedSound}
+            soundOptions={soundOptions}
           />
         </div>
       </div>
