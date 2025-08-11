@@ -1,0 +1,62 @@
+:root {
+  --primary-color: #007bff;
+  --background-color: #121212;
+  --card-background-color: #1e1e1e;
+  --text-color: #e0e0e0;
+  --muted-text-color: #adb5bd;
+  --border-color: #343a40;
+}
+
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+.card {
+  background-color: var(--card-background-color);
+  border-color: var(--border-color);
+  width: 30rem;
+  color: var(--text-color);
+}
+
+h1 {
+    color: var(--text-color);
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.btn-outline-primary {
+  color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.btn-outline-primary:hover, .btn-outline-primary.active {
+  background-color: var(--primary-color);
+  color: var(--text-color);
+}
+
+.form-check-input:checked {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.form-select {
+  background-color: var(--card-background-color);
+  color: var(--text-color);
+  border-color: var(--border-color);
+}
+
+.timer {
+  font-size: 6rem;
+}
+
+.stop-sound-btn {
+  visibility: hidden;
+}
+
+.stop-sound-btn.visible {
+  visibility: visible;
+}

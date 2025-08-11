@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
+import './theme.css';
 import Timer from './components/Timer';
 import Controls from './components/Controls';
 import Settings from './components/Settings';
@@ -147,7 +148,7 @@ function App() {
 
   return (
     <div className="container vh-100 d-flex justify-content-center align-items-center">
-      <div className="card shadow" style={{ width: '30rem' }}>
+      <div className="card shadow">
         <div className="card-body text-center">
           <h1 className="text-center">Pomo</h1>
           <Timer time={time} />

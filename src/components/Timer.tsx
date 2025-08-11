@@ -13,7 +13,7 @@ const Timer: React.FC<TimerProps> = ({ time }) => {
 
   return (
     <div className="text-center my-4">
-      <h2 style={{ fontSize: '6rem' }}>{formatTime(time)}</h2>
+      <h2 className="timer">{formatTime(time)}</h2>
     </div>
   );
 };
