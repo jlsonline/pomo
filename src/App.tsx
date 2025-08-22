@@ -12,9 +12,9 @@ interface SoundOption {
 }
 
 const soundOptions: SoundOption[] = [
-  { name: 'Bell', url: '/sounds/bell.mp3' },
-  { name: 'Chime', url: '/sounds/chime.mp3' },
-  { name: 'Ding', url: '/sounds/ding.mp3' },
+  { name: 'Bell', url: `${import.meta.env.BASE_URL}sounds/bell.mp3` },
+  { name: 'Chime', url: `${import.meta.env.BASE_URL}sounds/chime.mp3` },
+  { name: 'Ding', url: `${import.meta.env.BASE_URL}sounds/ding.mp3` },
 ];
 
 function App() {
