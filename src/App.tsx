@@ -145,7 +145,7 @@ function App() {
     }
 
     return () => clearInterval(interval);
-  }, [isActive, time, audioAlert, flashTitle, handleModeChange, mode, pomoCount, repeatSound, selectedSound, isSoundPlayingAndRepeating]);
+  }, [isActive, time, audioAlert, flashTitle, desktopNotification, handleModeChange, mode, pomoCount, repeatSound, selectedSound, isSoundPlayingAndRepeating]);
 
   
 
@@ -192,7 +192,6 @@ function App() {
             audioAlert={audioAlert}
             setAudioAlert={setAudioAlert}
             desktopNotification={desktopNotification}
-            setDesktopNotification={setDesktopNotification}
             onToggleDesktopNotification={handleToggleDesktopNotification}
             repeatSound={repeatSound}
             setRepeatSound={setRepeatSound}

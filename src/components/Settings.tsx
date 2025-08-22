@@ -11,8 +11,7 @@ interface SettingsProps {
   audioAlert: boolean;
   setAudioAlert: (audioAlert: boolean) => void;
   desktopNotification: boolean;
-  setDesktopNotification: (desktopNotification: boolean) => void;
-  onToggleDesktopNotification: (checked: boolean) => void;
+    onToggleDesktopNotification: (checked: boolean) => void;
   repeatSound: boolean;
   setRepeatSound: (repeatSound: boolean) => void;
   selectedSound: string;
@@ -25,7 +24,7 @@ interface SettingsProps {
 const Settings: React.FC<SettingsProps> = ({ 
   flashTitle, setFlashTitle, 
   audioAlert, setAudioAlert, 
-  desktopNotification, setDesktopNotification, 
+  desktopNotification,
   repeatSound, setRepeatSound, 
   selectedSound, setSelectedSound, 
   soundOptions, 
